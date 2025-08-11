@@ -40,8 +40,8 @@ class AllStatistics extends Component
     $questions = [
         'pregunta1' => ['a', 'b', 'c'],
         'pregunta2' => ['muy_importante', 'algo_importante', 'nada_importante'],
-        'pregunta5' => ['si', 'no'],
         'pregunta3' => ['a', 'b', 'c'],
+        'pregunta5' => ['si', 'no'],
         'pregunta8' => ['a', 'b', 'c'],
         'pregunta9' => ['si', 'no'],
         'pregunta10' => ['si', 'no'],

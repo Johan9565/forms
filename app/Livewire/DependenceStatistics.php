@@ -39,8 +39,8 @@ class DependenceStatistics extends Component
 
             // Calculate total responses for each area
             $this->areaTotals = [];
-            foreach ($formsByArea as $areaId => $forms) {
-                $this->areaTotals[$areaId] = count($forms);
+            foreach ($areas as $area) {
+                $this->areaTotals[$area->id_area] = isset($formsByArea[$area->id_area]) ? count($formsByArea[$area->id_area]) : 0;
             }
         } else {
             $this->formApegoEtico = [];
