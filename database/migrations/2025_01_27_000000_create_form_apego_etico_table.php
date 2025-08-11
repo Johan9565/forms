@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('form_apego_etico', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('dependencia_seleccionada')->nullable(); // Selected dependency
+            $table->unsignedInteger('area')->nullable(); // Selected dependency
             $table->string('pregunta1')->nullable(); // Ética Pública definition
             $table->string('pregunta2')->nullable(); // Importance of Code of Ethics
             $table->string('pregunta3')->nullable(); // Constitutional Principles
@@ -27,8 +27,11 @@ return new class extends Migration
             $table->json('principios')->nullable(); // Selected constitutional principles
             $table->text('pregunta11_explicacion')->nullable(); // Explanation for principles
             $table->string('pregunta12')->nullable(); // Ethical value definition
-            $table->string('pregunta13')->nullable(); // Reporting instances
-            $table->text('pregunta14')->nullable(); // Superior's example
+            $table->string('pregunta13')->nullable(); // Knowledge of reporting channels
+            $table->text('pregunta13_explicacion')->nullable(); // Explanation of channels
+            $table->string('pregunta14')->nullable(); // Reporting instances
+            $table->text('pregunta15')->nullable(); // Knowledge of committee members
+            $table->text('pregunta16')->nullable(); // Superior's example
             $table->string('ip_address')->nullable(); // IP address for tracking
             $table->string('user_agent')->nullable(); // User agent for tracking
             $table->timestamps();

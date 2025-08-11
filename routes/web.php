@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Forms;
+use App\Livewire\ApegoEticoStatistics;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,7 +16,9 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/apego-etico-statistics', ApegoEticoStatistics::class)->name('apego-etico-statistics');
 });
 
 // Route for areas view without authentication
-Route::get('/areas', Forms::class)->name('areas.view');
+Route::get('/forms', Forms::class)->name('forms.view');

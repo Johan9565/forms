@@ -11,9 +11,7 @@
                 Pública Municipal.
             </p>
             <p class="text-gray-600 dark:text-gray-400 mt-2">
-                El objetivo de este cuestionario es conocer la percepción que tienen las personas servidoras públicas
-                respecto del conocimiento y la aplicación de los principios y valores que contiene el Código de Ética y
-                Reglas de Integridad de los Servidores Públicos del Municipio de Benito Juárez.
+                El objetivo de este cuestionario es determinar el nivel de conocimiento y aplicación que tienen las personas servidoras públicas respecto de los principios y valores que contiene el Código de Ética y Reglas de Integridad de los Servidores Públicos del Municipio de Benito Juárez.
             </p>
         </div>
 
@@ -33,12 +31,9 @@
             </div>
 
             <!-- Pregunta 1 -->
-
-
             <div class="border-b border-gray-200 pb-6">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                    1. De las siguientes definiciones y para efectos del Código de Ética y Reglas de Integridad. ¿Cuál
-                    de ellas corresponde a la Ética Pública?
+                    1. De las siguientes definiciones, tomando como referencia el Código de Ética y Reglas de Integridad. ¿Cuál de ellas corresponde a la Ética Pública?
                 </h3>
                 <div class="space-y-3">
                     <label class="flex items-center space-x-3">
@@ -63,8 +58,7 @@
                         <input type="radio" name="pregunta1" value="c" class="text-blue-600"
                             wire:model="pregunta1">
                         <span class="text-gray-700 dark:text-gray-300">
-                            c) Ley que obliga a los servidores públicos a actuar de forma respetuosa, orientada a la
-                            legalidad, honradez y lealtad.
+                            c) Normatividad que obliga a los servidores públicos a actuar de forma respetuosa, orientada a la legalidad, honradez y lealtad.
                         </span>
                     </label>
                 </div>
@@ -76,7 +70,7 @@
             <!-- Pregunta 2 -->
             <div class="border-b border-gray-200 pb-6">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                    2. ¿Qué importancia tiene seguir un Código de Ética y Reglas de Integridad dentro de la
+                    2. ¿Qué importancia tiene implementar un Código de Ética y Reglas de Integridad dentro de la
                     Administración Pública Municipal?
                 </h3>
                 <div class="grid grid-cols-3 gap-4">
@@ -86,9 +80,9 @@
                         <span class="text-gray-700 dark:text-gray-300">Muy Importante</span>
                     </label>
                     <label class="flex items-center space-x-3">
-                        <input type="radio" name="pregunta2" value="poco_importante" class="text-blue-600"
+                        <input type="radio" name="pregunta2" value="algo_importante" class="text-blue-600"
                             wire:model="pregunta2">
-                        <span class="text-gray-700 dark:text-gray-300">Poco importante</span>
+                        <span class="text-gray-700 dark:text-gray-300">Algo importante</span>
                     </label>
                     <label class="flex items-center space-x-3">
                         <input type="radio" name="pregunta2" value="nada_importante" class="text-blue-600"
@@ -291,7 +285,7 @@
             <!-- Pregunta 11 -->
             <div class="border-b border-gray-200 pb-6">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                    11. Elija 3 Principios Constitucionales que considere necesario reforzar en su área de trabajo y
+                    11. Elija 3 Principios Constitucionales que sea necesario reforzar en su área de trabajo y
                     explique brevemente los motivos
                 </h3>
                 <div class="grid grid-cols-2 gap-4 mb-4">
@@ -416,35 +410,27 @@
             <!-- Pregunta 13 -->
             <div class="border-b border-gray-200 pb-6">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                    13. Cuáles son las instancias ante las cuales las personas servidoras públicas o particulares pueden
-                    acudir para hacer de conocimiento la vulneración o incumplimiento al Código de Ética y Reglas de
-                    integridad de los Servidores Públicos del Municipio de Benito Juárez, Quintana Roo.
+                    13. ¿Conoce los canales disponibles para señalar o presentar una queja o denuncia por probables infracciones al Código de Ética y Reglas de Integridad de los Servidores Públicos del Municipio de Benito Juárez?, en su caso, mencione 2 de ellos.
                 </h3>
-                <div class="space-y-3">
+                <div class="flex space-x-6 mb-4">
                     <label class="flex items-center space-x-3">
-                        <input type="radio" name="pregunta13" value="a" class="text-blue-600"
+                        <input type="radio" name="pregunta13" value="si" class="text-blue-600"
                             wire:model="pregunta13">
-                        <span class="text-gray-700 dark:text-gray-300">
-                            a) Contraloría Municipal y Fiscalía Especializada en Combate a la Corrupción
-                        </span>
+                        <span class="text-gray-700 dark:text-gray-300">Sí</span>
                     </label>
                     <label class="flex items-center space-x-3">
-                        <input type="radio" name="pregunta13" value="b" class="text-blue-600"
+                        <input type="radio" name="pregunta13" value="no" class="text-blue-600"
                             wire:model="pregunta13">
-                        <span class="text-gray-700 dark:text-gray-300">
-                            b) Contraloría Municipal y Comité de Ética y Conducta del Municipio de Benito Juárez.
-                        </span>
-                    </label>
-                    <label class="flex items-center space-x-3">
-                        <input type="radio" name="pregunta13" value="c" class="text-blue-600"
-                            wire:model="pregunta13">
-                        <span class="text-gray-700 dark:text-gray-300">
-                            c) Fiscalía Especializada en Combate a la Corrupción y Comité de Ética y de Prevención de
-                            Conflictos de Interés
-                        </span>
+                        <span class="text-gray-700 dark:text-gray-300">No</span>
                     </label>
                 </div>
+                <textarea wire:model="pregunta13_explicacion" rows="4"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    placeholder="Mencione 2 canales..."></textarea>
                 @error('pregunta13')
+                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                @enderror
+                @error('pregunta13_explicacion')
                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                 @enderror
             </div>
@@ -452,13 +438,59 @@
             <!-- Pregunta 14 -->
             <div class="border-b border-gray-200 pb-6">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                    14. ¿Considera que su superior jerárquico es ejemplo como servidor público que cumple y respeta los
+                    14. ¿Cuáles son las instancias a las que pueden acudir las personas servidoras públicas o particulares para hacer de conocimiento la vulneración o incumplimiento al Código de Ética y Reglas de integridad de los Servidores Públicos del Municipio de Benito Juárez, Quintana Roo?
+                </h3>
+                <div class="space-y-3">
+                    <label class="flex items-center space-x-3">
+                        <input type="radio" name="pregunta14" value="a" class="text-blue-600"
+                            wire:model="pregunta14">
+                        <span class="text-gray-700 dark:text-gray-300">
+                            a) En primera instancia la Contraloría Municipal y en segunda instancia la Fiscalía Especializada en Combate a la Corrupción
+                        </span>
+                    </label>
+                    <label class="flex items-center space-x-3">
+                        <input type="radio" name="pregunta14" value="b" class="text-blue-600"
+                            wire:model="pregunta14">
+                        <span class="text-gray-700 dark:text-gray-300">
+                            b) En primera instancia el Comité de Ética y Prevención de Conflictos de Interés y en segunda instancia Contraloría Municipal
+                        </span>
+                    </label>
+                    <label class="flex items-center space-x-3">
+                        <input type="radio" name="pregunta14" value="c" class="text-blue-600"
+                            wire:model="pregunta14">
+                        <span class="text-gray-700 dark:text-gray-300">
+                            c) En primera instancia la Fiscalía Especializada en Combate a la Corrupción y en segunda instancia Comité de Ética y de Prevención de Conflictos de Interés
+                        </span>
+                    </label>
+                </div>
+                @error('pregunta14')
+                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Pregunta 15 -->
+            <div class="border-b border-gray-200 pb-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                    15. ¿Conoce a los compañeros que integran el Comité de Ética y Prevención de Conflictos de Interés de la dependencia a la que se encuentra adscrito, y cuáles son sus funciones?
+                </h3>
+                <textarea wire:model="pregunta15" rows="4"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    placeholder="Su respuesta..."></textarea>
+                @error('pregunta15')
+                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Pregunta 16 -->
+            <div class="border-b border-gray-200 pb-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                    16. ¿Considera que su superior jerárquico es ejemplo como servidor público que cumple y respeta los
                     Principios Constitucionales y Valores Éticos del servicio público?
                 </h3>
-                <textarea wire:model="pregunta14" rows="4"
+                <textarea wire:model="pregunta16" rows="4"
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     placeholder="Argumente su respuesta..."></textarea>
-                @error('pregunta14')
+                @error('pregunta16')
                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                 @enderror
             </div>

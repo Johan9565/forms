@@ -28,7 +28,10 @@ class Forms extends Component
     public $pregunta11_explicacion = '';
     public $pregunta12 = '';
     public $pregunta13 = '';
+    public $pregunta13_explicacion = '';
     public $pregunta14 = '';
+    public $pregunta15 = '';
+    public $pregunta16 = '';
     public $area_seleccionada = null;
     public $areas = [];
     // Validation rules
@@ -48,7 +51,10 @@ class Forms extends Component
         'pregunta11_explicacion' => 'required|min:10',
         'pregunta12' => 'required',
         'pregunta13' => 'required',
-        'pregunta14' => 'required|min:10',
+        'pregunta13_explicacion' => 'required_if:pregunta13,si|min:10',
+        'pregunta14' => 'required',
+        'pregunta15' => 'required|min:10',
+        'pregunta16' => 'required|min:10',
     ];
 
     // Custom validation messages
@@ -74,8 +80,13 @@ class Forms extends Component
         'pregunta11_explicacion.min' => 'La explicación debe tener al menos 10 caracteres.',
         'pregunta12.required' => 'Debe seleccionar una opción para la pregunta 12.',
         'pregunta13.required' => 'Debe seleccionar una opción para la pregunta 13.',
-        'pregunta14.required' => 'Debe argumentar su respuesta en la pregunta 14.',
-        'pregunta14.min' => 'La argumentación debe tener al menos 10 caracteres.',
+        'pregunta13_explicacion.required_if' => 'Si selecciona Sí, debe mencionar los canales.',
+        'pregunta13_explicacion.min' => 'La explicación debe tener al menos 10 caracteres.',
+        'pregunta14.required' => 'Debe seleccionar una opción para la pregunta 14.',
+        'pregunta15.required' => 'Debe responder la pregunta 15.',
+        'pregunta15.min' => 'La respuesta de la pregunta 15 debe tener al menos 10 caracteres.',
+        'pregunta16.required' => 'Debe argumentar su respuesta en la pregunta 16.',
+        'pregunta16.min' => 'La argumentación debe tener al menos 10 caracteres.',
     ];
 
 
@@ -123,7 +134,10 @@ class Forms extends Component
                 'pregunta11_explicacion' => $this->pregunta11_explicacion,
                 'pregunta12' => $this->pregunta12,
                 'pregunta13' => $this->pregunta13,
+                'pregunta13_explicacion' => $this->pregunta13_explicacion,
                 'pregunta14' => $this->pregunta14,
+                'pregunta15' => $this->pregunta15,
+                'pregunta16' => $this->pregunta16,
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),
             ]);

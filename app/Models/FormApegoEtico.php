@@ -34,7 +34,10 @@ class FormApegoEtico extends Model
         'pregunta11_explicacion',
         'pregunta12',
         'pregunta13',
+        'pregunta13_explicacion',
         'pregunta14',
+        'pregunta15',
+        'pregunta16',
         'ip_address',
         'user_agent',
     ];
@@ -85,11 +88,11 @@ class FormApegoEtico extends Model
             'pregunta1' => [
                 'a' => 'Conjunto de cualidades por las que una persona servidora pública es apreciada o bien considerada en el servicio público.',
                 'b' => 'Disciplina basada en normas de conducta que se fundamentan en el deber público y que busca en toda decisión y acción, la prevalencia del bienestar de la sociedad en coordinación con los objetivos del Estado mexicano, de los entes públicos y de la responsabilidad de la persona ante éstos;',
-                'c' => 'Ley que obliga a los servidores públicos a actuar de forma respetuosa, orientada a la legalidad, honradez y lealtad.',
+                'c' => 'Normatividad que obliga a los servidores públicos a actuar de forma respetuosa, orientada a la legalidad, honradez y lealtad.',
             ],
             'pregunta2' => [
                 'muy_importante' => 'Muy Importante',
-                'poco_importante' => 'Poco importante',
+                'algo_importante' => 'Algo importante',
                 'nada_importante' => 'Nada importante',
             ],
             'pregunta3' => [
@@ -120,9 +123,13 @@ class FormApegoEtico extends Model
                 'liderazgo' => 'Liderazgo',
             ],
             'pregunta13' => [
-                'a' => 'Contraloría Municipal y Fiscalía Especializada en Combate a la Corrupción',
-                'b' => 'Contraloría Municipal y Comité de Ética y Conducta del Municipio de Benito Juárez.',
-                'c' => 'Fiscalía Especializada en Combate a la Corrupción y Comité de Ética y de Prevención de Conflictos de Interés',
+                'si' => 'Sí',
+                'no' => 'No',
+            ],
+            'pregunta14' => [
+                'a' => 'En primera instancia la Contraloría Municipal y en segunda instancia la Fiscalía Especializada en Combate a la Corrupción',
+                'b' => 'En primera instancia el Comité de Ética y Prevención de Conflictos de Interés y en segunda instancia Contraloría Municipal',
+                'c' => 'En primera instancia la Fiscalía Especializada en Combate a la Corrupción y en segunda instancia Comité de Ética y de Prevención de Conflictos de Interés',
             ],
         ];
     }

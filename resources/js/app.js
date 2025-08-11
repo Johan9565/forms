@@ -8,6 +8,219 @@ select2($);
 // Import Select2 CSS
 import "select2/dist/css/select2.min.css";
 
+import Chart from "chart.js/auto";
+
+function crearStackedBarChart(
+    canvasId,
+    etiquetas,
+    datasetsPorStack,
+    opcionesExtra = {}
+) {
+    console.log(opcionesExtra);
+
+    try {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) {
+            console.error(`Canvas element with id '${canvasId}' not found`);
+            return null;
+        }
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+            console.error(`Could not get 2D context for canvas '${canvasId}'`);
+            return null;
+        }
+
+        const colores = [
+            "rgba(255, 99, 132, 0.7)",
+            "rgba(54, 162, 235, 0.7)",
+            "rgba(255, 206, 86, 0.7)",
+            "rgba(75, 192, 192, 0.7)",
+            "rgba(153, 102, 255, 0.7)",
+            "rgba(255, 159, 64, 0.7)",
+            "rgba(201, 203, 207, 0.7)",
+            "rgba(0, 128, 128, 0.7)",
+            "rgba(128, 0, 128, 0.7)",
+            "rgba(0, 0, 128, 0.7)",
+            "rgba(128, 128, 0, 0.7)",
+            "rgba(0, 128, 0, 0.7)",
+            "rgba(128, 0, 0, 0.7)",
+            "rgba(255, 0, 255, 0.7)",
+            "rgba(0, 255, 255, 0.7)",
+            "rgba(0, 255, 0, 0.7)",
+            "rgba(255, 255, 0, 0.7)",
+            "rgba(255, 0, 0, 0.7)",
+        ];
+
+        // Generar datasets para cada stack
+        const datasets = datasetsPorStack.map((stack, stackIndex) => {
+            return {
+                label: stack.label || `Stack ${stackIndex + 1}`,
+                data: stack.data,
+                backgroundColor: colores[stackIndex % colores.length],
+                stack: "stack1",
+                borderWidth: 1,
+            };
+        });
+
+        // Procesar opciones extra para convertir strings de funciones a funciones reales
+        const processedOptions = {};
+        if (opcionesExtra && typeof opcionesExtra === "object") {
+            if (opcionesExtra.scales) {
+                processedOptions.scales = { ...opcionesExtra.scales };
+                if (
+                    processedOptions.scales.x &&
+                    processedOptions.scales.x.ticks
+                ) {
+                    if (
+                        typeof processedOptions.scales.x.ticks.callback ===
+                        "string"
+                    ) {
+                        // Extraer el contenido de la función del string
+                        const functionBody =
+                            processedOptions.scales.x.ticks.callback
+                                .replace(/^function\s*\([^)]*\)\s*\{/, "")
+                                .replace(/\}$/, "");
+                        processedOptions.scales.x.ticks.callback = new Function(
+                            "value",
+                            "index",
+                            "ticks",
+                            functionBody
+                        );
+                    }
+                }
+            }
+
+            if (opcionesExtra.plugins) {
+                processedOptions.plugins = { ...opcionesExtra.plugins };
+                if (
+                    processedOptions.plugins.tooltip &&
+                    processedOptions.plugins.tooltip.callbacks
+                ) {
+                    if (
+                        typeof processedOptions.plugins.tooltip.callbacks
+                            .label === "string"
+                    ) {
+                        // Extraer el contenido de la función del string
+                        const functionBody =
+                            processedOptions.plugins.tooltip.callbacks.label
+                                .replace(/^function\s*\([^)]*\)\s*\{/, "")
+                                .replace(/\}$/, "");
+                        processedOptions.plugins.tooltip.callbacks.label =
+                            new Function("context", functionBody);
+                    }
+                }
+            }
+        }
+
+        return new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: etiquetas,
+                datasets: datasets,
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        stacked: true,
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                    },
+                },
+                ...processedOptions,
+            },
+        });
+    } catch (error) {
+        console.error(
+            `Error creating stacked bar chart for '${canvasId}':`,
+            error
+        );
+        return null;
+    }
+}
+
+// Function to create charts dynamically
+function createDynamicChart(chartConfig, config = {}) {
+    const { canvasId, labels, datasets, optionLabels } = chartConfig;
+
+    // Check if canvas element exists
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) {
+        console.warn(`Canvas element with id '${canvasId}' not found`);
+        return null;
+    }
+
+    // Create datasets array dynamically
+    const chartDatasets = [];
+    Object.keys(datasets).forEach((indexKey, index) => {
+        chartDatasets.push({
+            label: optionLabels[index] || `Option ${index + 1}`,
+            data: datasets[indexKey],
+        });
+    });
+
+    // Create the chart and return it
+    try {
+        return crearStackedBarChart(canvasId, labels, chartDatasets, config);
+    } catch (error) {
+        console.error(`Error creating chart for ${canvasId}:`, error);
+        return null;
+    }
+}
+
+// Listen for statistics charts initialization
+Livewire.on("initializeStatisticsCharts", (data) => {
+    console.log("Received chart data:", data[0].chartData);
+
+    // Use setTimeout to ensure DOM is ready
+    setTimeout(() => {
+        try {
+            // Destroy existing charts first to prevent conflicts
+            if (window.existingCharts) {
+                window.existingCharts.forEach((chart) => {
+                    if (chart && typeof chart.destroy === "function") {
+                        chart.destroy();
+                    }
+                });
+            }
+            window.existingCharts = [];
+
+            // Create charts dynamically from the data
+            if (data[0].chartData) {
+                console.log("Received chart data:", data);
+
+                Object.keys(data[0].chartData).forEach((chartKey) => {
+                    const chartConfig = data[0].chartData[chartKey];
+                    const chart = createDynamicChart(
+                        chartConfig,
+                        data[0].config
+                    );
+                    if (chart) {
+                        window.existingCharts.push(chart);
+                    }
+                });
+            }
+        } catch (error) {
+            console.error("Error initializing charts:", error);
+        }
+    }, 100);
+});
+
+// Listen for chart cleanup
+Livewire.on("cleanupCharts", () => {
+    if (window.existingCharts) {
+        window.existingCharts.forEach((chart) => {
+            if (chart && typeof chart.destroy === "function") {
+                chart.destroy();
+            }
+        });
+        window.existingCharts = [];
+    }
+});
+
 Livewire.on("sweetalert2", (options = {}) => {
     if (Array.isArray(options)) options = options[0];
     console.log(options);
@@ -46,7 +259,9 @@ Livewire.on("sweetalert2", (options = {}) => {
                     result: "confirmed",
                 });
             } else if (result.isDenied) {
-                Livewire.dispatch(`${options.callback}`, { result: "denied" });
+                Livewire.dispatch(`${options.callback}`, {
+                    result: "denied",
+                });
             } else if (result.isDismissed) {
                 Livewire.dispatch(`${options.callback}`, {
                     result: "dismissed",
