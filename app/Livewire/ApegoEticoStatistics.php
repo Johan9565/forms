@@ -16,6 +16,8 @@ class ApegoEticoStatistics extends Component
     public $dependency;
     public $dependencies_select;
     public $filter = 'all';
+    public $areaDisabled = false;
+    public $dependencyDisabled = false;
 
     public function mount(){
         $this->formApegoEtico = FormApegoEtico::all();
@@ -62,31 +64,35 @@ class ApegoEticoStatistics extends Component
     public function updatedArea($value)
     {
         if ($value && $value !== "" && $value !== null) {
+            $this->dependencyDisabled = true;
             $this->filter = 'area';
             $this->dependency = null; // Clear dependency when area is selected
+            $this->dispatch('area-selected', $this->dependencyDisabled);
         } else {
             $this->filter = 'all';
             $this->area = null;
+            $this->dependencyDisabled = false;
+            $this->dispatch('area-selected', $this->dependencyDisabled);
         }
     }
 
     public function updatedDependency($value)
     {
         if ($value && $value !== "" && $value !== null) {
+            $this->areaDisabled = true;
             $this->filter = 'dependence';
-            $this->area = null; // Clear area when dependency is selected
+            $this->dispatch('dependency-selected', $this->areaDisabled);
         } else {
             $this->filter = 'all';
             $this->dependency = null;
+            $this->areaDisabled = false;
+            $this->dispatch('dependency-selected', $this->areaDisabled);
+
+
         }
     }
 
-    public function resetFilter()
-    {
-        $this->filter = 'all';
-        $this->area = null;
-        $this->dependency = null;
-    }
+
 
     public function refresh()
     {

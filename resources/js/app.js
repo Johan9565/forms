@@ -9,15 +9,13 @@ select2($);
 import "select2/dist/css/select2.min.css";
 
 import Chart from "chart.js/auto";
-
+window.$ = window.jQuery = $;
 function crearStackedBarChart(
     canvasId,
     etiquetas,
     datasetsPorStack,
     opcionesExtra = {}
 ) {
-    console.log(opcionesExtra);
-
     try {
         const canvas = document.getElementById(canvasId);
         if (!canvas) {
@@ -89,6 +87,27 @@ function crearStackedBarChart(
                         );
                     }
                 }
+                if (
+                    processedOptions.scales.y &&
+                    processedOptions.scales.y.ticks
+                ) {
+                    if (
+                        typeof processedOptions.scales.y.ticks.callback ===
+                        "string"
+                    ) {
+                        // Extraer el contenido de la función del string
+                        const functionBody =
+                            processedOptions.scales.y.ticks.callback
+                                .replace(/^function\s*\([^)]*\)\s*\{/, "")
+                                .replace(/\}$/, "");
+                        processedOptions.scales.y.ticks.callback = new Function(
+                            "value",
+                            "index",
+                            "ticks",
+                            functionBody
+                        );
+                    }
+                }
             }
 
             if (opcionesExtra.plugins) {
@@ -128,6 +147,10 @@ function crearStackedBarChart(
                     y: {
                         stacked: true,
                         beginAtZero: true,
+                        max: 100, // Default max for percentage charts
+                        ...(processedOptions.scales && processedOptions.scales.y
+                            ? processedOptions.scales.y
+                            : {}),
                     },
                 },
                 ...processedOptions,
@@ -144,7 +167,7 @@ function crearStackedBarChart(
 
 // Function to create charts dynamically
 function createDynamicChart(chartConfig, config = {}) {
-    const { canvasId, labels, datasets, optionLabels } = chartConfig;
+    const { canvasId, labels, datasets, counts, optionLabels } = chartConfig;
 
     // Check if canvas element exists
     const canvas = document.getElementById(canvasId);
@@ -164,7 +187,19 @@ function createDynamicChart(chartConfig, config = {}) {
 
     // Create the chart and return it
     try {
-        return crearStackedBarChart(canvasId, labels, chartDatasets, config);
+        const chart = crearStackedBarChart(
+            canvasId,
+            labels,
+            chartDatasets,
+            config
+        );
+
+        // Add counts data to the chart for tooltip access
+        if (chart && counts) {
+            chart.data.counts = counts;
+        }
+
+        return chart;
     } catch (error) {
         console.error(`Error creating chart for ${canvasId}:`, error);
         return null;
@@ -173,8 +208,6 @@ function createDynamicChart(chartConfig, config = {}) {
 
 // Listen for statistics charts initialization
 Livewire.on("initializeStatisticsCharts", (data) => {
-    console.log("Received chart data:", data[0].chartData);
-
     // Use setTimeout to ensure DOM is ready
     setTimeout(() => {
         try {
@@ -190,8 +223,6 @@ Livewire.on("initializeStatisticsCharts", (data) => {
 
             // Create charts dynamically from the data
             if (data[0].chartData) {
-                console.log("Received chart data:", data);
-
                 Object.keys(data[0].chartData).forEach((chartKey) => {
                     const chartConfig = data[0].chartData[chartKey];
                     const chart = createDynamicChart(

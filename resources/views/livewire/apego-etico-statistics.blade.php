@@ -16,7 +16,7 @@
                 <label for="areaFilter"
                     class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Área</label>
                 <x-select-component id="area" name="area" model="area" placeholder="Seleccione un área"
-                    :options="$areas_select['options']" :selected="$areas_select['options']" class="w-full" wire:ignore />
+                    :options="$areas_select['options']" :selected="$areas_select['options']" class="w-full" wire:ignore :disabled="$areaDisabled" />
                 @error('area')
                     <div class="label">
                         <span class="label-text-alt text-error">{{ $message }}</span>
@@ -30,7 +30,7 @@
                     class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Dependencia</label>
                 <x-select-component id="dependency" name="dependency" model="dependency"
                     placeholder="Seleccione una dependencia" :options="$dependencies_select['options']" :selected="$dependencies_select['options']" class="w-full"
-                    wire:ignore />
+                   wire:ignore :disabled="$dependencyDisabled" />
                 @error('dependency')
                     <div class="label">
                         <span class="label-text-alt text-error">{{ $message }}</span>
@@ -65,3 +65,14 @@
 
     </div>
 </div>
+@script
+    <script>
+        Livewire.on('area-selected', function(disabled) {
+          $('#dependency').val(null).trigger('change.select2');
+        });
+
+        Livewire.on('dependency-selected', function(disabled) {
+            $('#area').val(null).trigger('change.select2');
+        });
+    </script>
+@endscript
