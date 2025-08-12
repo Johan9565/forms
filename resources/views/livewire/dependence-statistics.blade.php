@@ -19,35 +19,46 @@
     </div>
 
     <!-- Tabs Navigation -->
-    <div class="mb-6">
-        <ul class="flex border-b" role="tablist">
-            <li class="-mb-px mr-1">
-                <button
-                    class="bg-white dark:bg-gray-800 inline-block py-2 px-4 text-blue-700 font-semibold border-l border-t border-r rounded-t focus:outline-none"
-                    :class="{ 'border-b-2 border-blue-600': tab === 'areasbyquestions' }"
+    <div class="mb-8">
+        <div class="border-b border-gray-200 dark:border-gray-700">
+            <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                                                <button
                     wire:click="$set('tab', 'areasbyquestions')"
-                    type="button"
+                    class="group relative min-w-0 flex-1 overflow-hidden py-4 px-1 text-center text-sm font-medium focus:z-10 focus:outline-none transition-all duration-200 {{ $tab === 'areasbyquestions' ? 'text-white border-b-2 border-white' : 'text-gray-300 hover:text-white' }}"
                 >
-                    Total de las preguntas por área
+                    <div class="flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span>Total por Área</span>
+                    </div>
+                                                                                                    <span
+                        class="absolute inset-x-0 bottom-0 h-0.5 transition-all duration-200 {{ $tab === 'areasbyquestions' ? 'bg-white' : 'bg-transparent group-hover:bg-gray-400' }}"
+                    ></span>
                 </button>
-            </li>
-            <li class="mr-1">
-                <button
-                    class="bg-white dark:bg-gray-800 inline-block py-2 px-4 text-blue-700 font-semibold border-l border-t border-r rounded-t focus:outline-none"
-                    :class="{ 'border-b-2 border-blue-600': tab === 'questionsbyarea' }"
+
+                                                                <button
                     wire:click="$set('tab', 'questionsbyarea')"
-                    type="button"
+                    class="group relative min-w-0 flex-1 overflow-hidden py-4 px-1 text-center text-sm font-medium focus:z-10 focus:outline-none transition-all duration-200 {{ $tab === 'questionsbyarea' ? 'text-white border-b-2 border-white' : 'text-gray-300 hover:text-white' }}"
                 >
-                    Preguntas por área individual
+                    <div class="flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        <span>Preguntas Individuales</span>
+                    </div>
+                                                                                                    <span
+                        class="absolute inset-x-0 bottom-0 h-0.5 transition-all duration-200 {{ $tab === 'questionsbyarea' ? 'bg-white' : 'bg-transparent group-hover:bg-gray-400' }}"
+                    ></span>
                 </button>
-            </li>
-        </ul>
+            </nav>
+        </div>
     </div>
 
     <!-- Tab Content -->
-    <div x-data="{ tab: @entangle('tab') }">
+    @if($tab === 'areasbyquestions')
         <!-- Areas by Questions Tab -->
-        <div x-show="tab === 'areasbyquestions'">
+        <div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Total de la dependencia</h3>
             <!-- Charts Section -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
@@ -86,9 +97,11 @@
     @endforeach
     @endif
         </div>
+    @endif
 
+    @if($tab === 'questionsbyarea')
         <!-- Questions by Area Tab -->
-        <div x-show="tab === 'questionsbyarea'">
+        <div>
             @foreach ($areas as $area)
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Total de la {{ $area->name }} {{ $areaTotals[$area->id_area] }}</h3>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
@@ -101,6 +114,6 @@
             </div>
             @endforeach
         </div>
-    </div>
+    @endif
 
 </div>
