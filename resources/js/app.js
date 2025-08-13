@@ -9,6 +9,80 @@ select2($);
 import "select2/dist/css/select2.min.css";
 
 import Chart from "chart.js/auto";
+
+// Theme toggle functionality
+document.addEventListener("DOMContentLoaded", function () {
+    const themeToggleBtn = document.getElementById("theme-toggle");
+    const themeToggleLightIcon = document.getElementById(
+        "theme-toggle-light-icon"
+    );
+    const themeToggleDarkIcon = document.getElementById(
+        "theme-toggle-dark-icon"
+    );
+
+    // Function to update application mark based on theme
+    function updateApplicationMark() {
+        const lightLogos = document.querySelectorAll(".application-mark-light");
+        const darkLogos = document.querySelectorAll(".application-mark-dark");
+
+        if (document.documentElement.classList.contains("dark")) {
+            // Dark theme - show dark logo, hide light logo
+            lightLogos.forEach((logo) => (logo.style.display = "none"));
+            darkLogos.forEach((logo) => (logo.style.display = "block"));
+        } else {
+            // Light theme - show light logo, hide dark logo
+            lightLogos.forEach((logo) => (logo.style.display = "block"));
+            darkLogos.forEach((logo) => (logo.style.display = "none"));
+        }
+    }
+
+    // Change the icons inside the button based on previous settings
+    if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+        themeToggleLightIcon.classList.remove("hidden");
+        document.documentElement.classList.add("dark");
+    } else {
+        themeToggleDarkIcon.classList.remove("hidden");
+        document.documentElement.classList.remove("dark");
+    }
+
+    // Initialize application mark
+    updateApplicationMark();
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener("click", function () {
+            // Toggle icons
+            themeToggleLightIcon.classList.toggle("hidden");
+            themeToggleDarkIcon.classList.toggle("hidden");
+
+            // If is set in localStorage
+            if (localStorage.getItem("color-theme")) {
+                if (localStorage.getItem("color-theme") === "light") {
+                    document.documentElement.classList.add("dark");
+                    localStorage.setItem("color-theme", "dark");
+                } else {
+                    document.documentElement.classList.remove("dark");
+                    localStorage.setItem("color-theme", "light");
+                }
+            } else {
+                // If NOT in localStorage
+                if (document.documentElement.classList.contains("dark")) {
+                    document.documentElement.classList.remove("dark");
+                    localStorage.setItem("color-theme", "light");
+                } else {
+                    document.documentElement.classList.add("dark");
+                    localStorage.setItem("color-theme", "dark");
+                }
+            }
+
+            // Update application mark after theme change
+            updateApplicationMark();
+        });
+    }
+});
 window.$ = window.jQuery = $;
 function crearStackedBarChart(
     canvasId,

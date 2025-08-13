@@ -3,8 +3,7 @@
         <div class="flex items-center h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36">
             <!-- Logo -->
             <div class="flex items-center">
-                <img src="{{ asset('build/assets/img/logocontraloria_white.png') }}" alt="Logo Contraloría Municipal"
-                    class="h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36 w-auto object-contain">
+                <x-application-mark class="h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36 w-auto object-contain" />
             </div>
         </div>
     </div>

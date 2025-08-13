@@ -5,7 +5,7 @@ use App\Livewire\Forms;
 use App\Livewire\ApegoEticoStatistics;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::middleware([
