@@ -24,6 +24,27 @@
         } else {
             document.documentElement.classList.remove('dark');
         }
+
+        // Function to update application mark based on theme
+        function updateApplicationMark() {
+            const lightLogos = document.querySelectorAll('.application-mark-light');
+            const darkLogos = document.querySelectorAll('.application-mark-dark');
+
+            if (document.documentElement.classList.contains('dark')) {
+                // Dark theme - show dark logo, hide light logo
+                lightLogos.forEach(logo => logo.style.display = 'none');
+                darkLogos.forEach(logo => logo.style.display = 'block');
+            } else {
+                // Light theme - show light logo, hide dark logo
+                lightLogos.forEach(logo => logo.style.display = 'block');
+                darkLogos.forEach(logo => logo.style.display = 'none');
+            }
+        }
+
+        // Update application mark when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            updateApplicationMark();
+        });
     </script>
 </head>
 
