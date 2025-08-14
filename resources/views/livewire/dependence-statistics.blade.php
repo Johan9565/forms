@@ -22,7 +22,7 @@
     <div class="mb-8">
         <div class="border-b border-gray-200 dark:border-gray-700">
             <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-                <button
+                                                <button
                     wire:click="$set('tab', 'areasbyquestions')"
                     class="group relative min-w-0 flex-1 overflow-hidden py-4 px-1 text-center text-sm font-medium focus:z-10 focus:outline-none transition-all duration-200 {{ $tab === 'areasbyquestions' ? 'text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300' }}"
                 >
@@ -32,12 +32,12 @@
                         </svg>
                         <span>Total por Área</span>
                     </div>
-                    <span
+                                                                                                    <span
                         class="absolute inset-x-0 bottom-0 h-0.5 transition-all duration-200 {{ $tab === 'areasbyquestions' ? 'bg-blue-600 dark:bg-blue-400' : 'bg-transparent group-hover:bg-gray-300 dark:group-hover:bg-gray-600' }}"
                     ></span>
                 </button>
 
-                <button
+                                                                <button
                     wire:click="$set('tab', 'questionsbyarea')"
                     class="group relative min-w-0 flex-1 overflow-hidden py-4 px-1 text-center text-sm font-medium focus:z-10 focus:outline-none transition-all duration-200 {{ $tab === 'questionsbyarea' ? 'text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300' }}"
                 >
@@ -47,7 +47,7 @@
                         </svg>
                         <span>Preguntas Individuales</span>
                     </div>
-                    <span
+                                                                                                    <span
                         class="absolute inset-x-0 bottom-0 h-0.5 transition-all duration-200 {{ $tab === 'questionsbyarea' ? 'bg-blue-600 dark:bg-blue-400' : 'bg-transparent group-hover:bg-gray-300 dark:group-hover:bg-gray-600' }}"
                     ></span>
                 </button>

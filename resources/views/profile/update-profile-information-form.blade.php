@@ -19,29 +19,29 @@
 
         <!-- Form -->
         <form wire:submit="updateProfileInformation" class="p-6 space-y-6">
-            <!-- Profile Photo -->
-            @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+        <!-- Profile Photo -->
+        @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                 <div x-data="{photoName: null, photoPreview: null}" class="space-y-4">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                         {{ __('Foto de Perfil') }}
                     </label>
 
-                    <!-- Profile Photo File Input -->
-                    <input type="file" id="photo" class="hidden"
-                                wire:model.live="photo"
-                                x-ref="photo"
-                                x-on:change="
-                                        photoName = $refs.photo.files[0].name;
+                <!-- Profile Photo File Input -->
+                <input type="file" id="photo" class="hidden"
+                            wire:model.live="photo"
+                            x-ref="photo"
+                            x-on:change="
+                                    photoName = $refs.photo.files[0].name;
                                         const reader = new FileReader();z
-                                        reader.onload = (e) => {
-                                            photoPreview = e.target.result;
-                                        };
-                                        reader.readAsDataURL($refs.photo.files[0]);
-                                " />
+                                    reader.onload = (e) => {
+                                        photoPreview = e.target.result;
+                                    };
+                                    reader.readAsDataURL($refs.photo.files[0]);
+                            " />
 
                     <!-- Photo Display Section -->
                     <div class="flex items-center space-x-6">
-                        <!-- Current Profile Photo -->
+                <!-- Current Profile Photo -->
                         <div x-show="! photoPreview" class="flex-shrink-0">
                             <div class="relative">
                                 <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}"
@@ -52,21 +52,21 @@
                                     </svg>
                                 </div>
                             </div>
-                        </div>
+                </div>
 
-                        <!-- New Profile Photo Preview -->
+                <!-- New Profile Photo Preview -->
                         <div x-show="photoPreview" style="display: none;" class="flex-shrink-0">
                             <div class="relative">
                                 <span class="block w-24 h-24 rounded-full bg-cover bg-no-repeat bg-center border-4 border-blue-200 dark:border-blue-600 shadow-lg"
-                                      x-bind:style="'background-image: url(\'' + photoPreview + '\');'">
-                                </span>
+                          x-bind:style="'background-image: url(\'' + photoPreview + '\');'">
+                    </span>
                                 <div class="absolute -bottom-1 -right-1 w-8 h-8 bg-blue-400 rounded-full border-4 border-white dark:border-gray-800 flex items-center justify-center">
                                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                     </svg>
                                 </div>
                             </div>
-                        </div>
+                </div>
 
                         <!-- Photo Actions -->
                         <div class="flex flex-col space-y-2">
@@ -79,7 +79,7 @@
                                 {{ __('Seleccionar una nueva foto') }}
                             </button>
 
-                            @if ($this->user->profile_photo_path)
+                @if ($this->user->profile_photo_path)
                                 <button type="button"
                                         wire:click="deleteProfilePhoto"
                                         class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-lg font-medium text-sm text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-all duration-200 shadow-md hover:shadow-lg">
@@ -88,15 +88,15 @@
                                     </svg>
                                     {{ __('Eliminar foto') }}
                                 </button>
-                            @endif
+                @endif
                         </div>
                     </div>
 
-                    <x-input-error for="photo" class="mt-2" />
-                </div>
-            @endif
+                <x-input-error for="photo" class="mt-2" />
+            </div>
+        @endif
 
-            <!-- Name -->
+        <!-- Name -->
             <div class="space-y-2">
                 <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     {{ __('Nombre Completo') }}
@@ -118,9 +118,9 @@
                     >
                 </div>
                 <x-input-error for="name" class="mt-1" />
-            </div>
+        </div>
 
-            <!-- Email -->
+        <!-- Email -->
             <div class="space-y-2">
                 <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     {{ __('Dirección de Correo Electrónico') }}
@@ -143,7 +143,7 @@
                 </div>
                 <x-input-error for="email" class="mt-1" />
 
-                @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::emailVerification()) && ! $this->user->hasVerifiedEmail())
+            @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::emailVerification()) && ! $this->user->hasVerifiedEmail())
                     <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -161,13 +161,13 @@
                                             class="mt-2 text-[#691b31] dark:text-[#8a1f3f] hover:text-[#5a1629] dark:hover:text-[#7a1b35] font-medium underline focus:outline-none focus:ring-2 focus:ring-[#691b31] focus:ring-offset-2 dark:focus:ring-offset-gray-800 rounded"
                                             wire:click.prevent="sendEmailVerification">
                                         {{ __('Haga clic aquí para reenviar el correo de verificación.') }}
-                                    </button>
+                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    @if ($this->verificationLinkSent)
+                @if ($this->verificationLinkSent)
                         <div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
                             <div class="flex">
                                 <div class="flex-shrink-0">
@@ -178,13 +178,13 @@
                                 <div class="ml-3">
                                     <p class="text-sm font-medium text-green-800 dark:text-green-200">
                                         {{ __('Se ha enviado un nuevo enlace de verificación a su dirección de correo electrónico.') }}
-                                    </p>
+                    </p>
                                 </div>
                             </div>
                         </div>
-                    @endif
                 @endif
-            </div>
+            @endif
+        </div>
 
             <!-- Actions -->
             <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
@@ -195,7 +195,7 @@
                         </svg>
                         {{ __('Perfil actualizado correctamente!') }}
                     </div>
-                </x-action-message>
+        </x-action-message>
 
                 <button
                     type="submit"

@@ -86,7 +86,7 @@
                     >
                 </div>
                 <x-input-error for="password_confirmation" class="mt-1" />
-            </div>
+        </div>
 
             <!-- Password Requirements -->
             <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
@@ -110,7 +110,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+        </div>
 
             <!-- Actions -->
             <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
@@ -121,7 +121,7 @@
                         </svg>
                         {{ __('Contraseña actualizada correctamente!') }}
                     </div>
-                </x-action-message>
+        </x-action-message>
 
                                 <button
                     type="submit"
