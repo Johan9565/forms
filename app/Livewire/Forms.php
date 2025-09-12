@@ -181,13 +181,14 @@ class Forms extends Component
     private function getAreasOptions(): array
     {
         return cache()->remember('areas_options', 300, function () {
-            $areas = Areas::all();
+            // Eager load the dependency relationship to avoid N+1 queries
+            $areas = Areas::with('dependency')->get();
 
             return $areas->map(function ($area) {
-                // Use 'role' field for display (user-friendly) and 'name' for value (system-friendly
-
-                $displayName = $area->name ?? 'Unknown Area';
-                $systemName = $area->id_area  ?? 'unknown';
+                // Use 'id_area' field for value and 'name' + dependency name for display
+                $dependencyName = $area->dependency ? $area->dependency->dependence_name : 'Unknown Dependency';
+                $displayName = $area->name . ' - ' . $dependencyName;
+                $systemName = $area->id_area;
 
                 return [
                     'value' => $systemName,
