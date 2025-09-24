@@ -7,6 +7,7 @@ use App\Models\FormApegoEtico;
 use App\Models\Dependencies;
 use App\Models\Areas;
 use App\Helpers\StatisticsHelper;
+use Illuminate\Http\Response;
 
 class DependenceStatistics extends Component
 {
@@ -277,5 +278,42 @@ class DependenceStatistics extends Component
         ]);
 
         return view('livewire.dependence-statistics');
+    }
+
+    public function exportToExcel()
+    {
+        $dependencyName = $this->dependency ? Dependencies::find($this->dependency)->dependence_name : 'Todas las Dependencias';
+        $fileName = 'estadisticas_areas_' . str_replace(' ', '_', strtolower($dependencyName)) . '_' . date('Y-m-d_H-i-s') . '.csv';
+        
+        $csvData = $this->generateCsvData();
+        
+        return response()->streamDownload(function () use ($csvData) {
+            // Agregar BOM para UTF-8 para compatibilidad con Excel
+            echo "\xEF\xBB\xBF" . $csvData;
+        }, $fileName, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+        ]);
+    }
+
+    private function generateCsvData()
+    {
+        $csv = "Área,Dependencia,Total de Respuestas por Área,Total de la Dependencia\n";
+        
+        foreach ($this->areas as $area) {
+            $dependencyName = $area->dependency ? $area->dependency->dependence_name : 'N/A';
+            $areaTotal = $this->areaTotals[$area->id_area] ?? 0;
+            
+            // Escapar comillas dobles y caracteres especiales
+            $areaName = str_replace('"', '""', $area->name);
+            $depName = str_replace('"', '""', $dependencyName);
+            
+            $csv .= '"' . $areaName . '",';
+            $csv .= '"' . $depName . '",';
+            $csv .= $areaTotal . ',';
+            $csv .= $this->totalResponses . "\n";
+        }
+        
+        return $csv;
     }
 }
