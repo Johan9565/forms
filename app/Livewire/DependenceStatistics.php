@@ -7,6 +7,7 @@ use App\Models\FormApegoEtico;
 use App\Models\Dependencies;
 use App\Models\Areas;
 use App\Helpers\StatisticsHelper;
+use Illuminate\Http\Response;
 
 class DependenceStatistics extends Component
 {
@@ -21,9 +22,52 @@ class DependenceStatistics extends Component
     public $countAnwersByArea;
     public $areasNames;
     public $countforeachAnswerByArea;
+    public $ask_names;
 
     public function mount($dependency = null)
     {
+        $this->ask_names = [
+            [
+                "numero_pregunta" => 1,
+                "pregunta" => "De las siguientes definiciones, tomando como referencia el Código de Ética y Reglas de Integridad. ¿Cuál de ellas corresponde a la Ética Pública?"
+            ],
+            [
+                "numero_pregunta" => 2,
+                "pregunta" => " ¿Qué importancia tiene implementar un Código de Ética y Reglas de Integridad dentro de la Administración Pública Municipal?"
+            ],
+            [
+                "numero_pregunta" => 3,
+                "pregunta" => "¿Qué Principios Constitucionales deben aplicar las personas servidoras públicas en su labor diaria?"
+            ],
+            [
+                "numero_pregunta" => 5,
+                "pregunta" => "¿Considera importante que existan normas que orienten el comportamiento ético de los servidores públicos?"
+            ],
+            [
+                "numero_pregunta" => 8,
+                "pregunta" => "¿Qué debe hacer un servidor público, si tiene conocimiento de un asunto en el que su objetividad e imparcialidad puedan verse afectadas por la existencia de algún conflicto de interés o impedimento legal?"
+            ],
+            [
+                "numero_pregunta" => 9,
+                "pregunta" => "¿Ha recibido alguna capacitación, charla o información sobre el Código de Ética y Reglas de Integridad?"
+            ],
+            [
+                "numero_pregunta" => 10,
+                "pregunta" => "¿Considera necesaria una capacitación de sensibilización en materia de ética?"
+            ],
+            [
+                "numero_pregunta" => 12,
+                "pregunta" => "Este valor ético consiste en que las personas servidoras públicas actúen buscando en todo momento la máxima atención de las necesidades y demandas de la sociedad por encima de intereses y beneficios particulares, ajenos a la satisfacción colectiva."
+            ],
+            [
+                "numero_pregunta" => 13,
+                "pregunta" => "¿Conoce los canales disponibles para señalar o presentar una queja o denuncia por probables infracciones al Código de Ética y Reglas de Integridad de los Servidores Públicos del Municipio de Benito Juárez?, en su caso, mencione 2 de ellos."
+            ],
+            [
+                "numero_pregunta" => 14,
+                "pregunta" => "¿Cuáles son las instancias a las que pueden acudir las personas servidoras públicas o particulares para hacer de conocimiento la vulneración o incumplimiento al Código de Ética y Reglas de integridad de los Servidores Públicos del Municipio de Benito Juárez, Quintana Roo?"
+            ]
+        ];
         $this->dependency = $dependency;
         $this->loadStatistics();
 
@@ -234,5 +278,42 @@ class DependenceStatistics extends Component
         ]);
 
         return view('livewire.dependence-statistics');
+    }
+
+    public function exportToExcel()
+    {
+        $dependencyName = $this->dependency ? Dependencies::find($this->dependency)->dependence_name : 'Todas las Dependencias';
+        $fileName = 'estadisticas_areas_' . str_replace(' ', '_', strtolower($dependencyName)) . '_' . date('Y-m-d_H-i-s') . '.csv';
+        
+        $csvData = $this->generateCsvData();
+        
+        return response()->streamDownload(function () use ($csvData) {
+            // Agregar BOM para UTF-8 para compatibilidad con Excel
+            echo "\xEF\xBB\xBF" . $csvData;
+        }, $fileName, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+        ]);
+    }
+
+    private function generateCsvData()
+    {
+        $csv = "Área,Dependencia,Total de Respuestas por Área,Total de la Dependencia\n";
+        
+        foreach ($this->areas as $area) {
+            $dependencyName = $area->dependency ? $area->dependency->dependence_name : 'N/A';
+            $areaTotal = $this->areaTotals[$area->id_area] ?? 0;
+            
+            // Escapar comillas dobles y caracteres especiales
+            $areaName = str_replace('"', '""', $area->name);
+            $depName = str_replace('"', '""', $dependencyName);
+            
+            $csv .= '"' . $areaName . '",';
+            $csv .= '"' . $depName . '",';
+            $csv .= $areaTotal . ',';
+            $csv .= $this->totalResponses . "\n";
+        }
+        
+        return $csv;
     }
 }

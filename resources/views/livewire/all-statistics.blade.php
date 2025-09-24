@@ -77,7 +77,16 @@
                 // Extraer el número de pregunta del canvasId, por ejemplo: "miChartpregunta1" => "1"
                 $preguntaLabel = '';
                 if (preg_match('/miChartpregunta(\d+)/', $chart['canvasId'], $matches)) {
-                    $preguntaLabel = 'Pregunta ' . $matches[1];
+                    $numeroPregunta = $matches[1];
+                    
+                    // Buscar la pregunta en el array $ask_names
+                    $preguntaEncontrada = collect($ask_names)->firstWhere('numero_pregunta', $numeroPregunta);
+                    
+                    if ($preguntaEncontrada) {
+                        $preguntaLabel = 'Pregunta ' . $numeroPregunta . ': ' . $preguntaEncontrada['pregunta'];
+                    } else {
+                        $preguntaLabel = 'Pregunta ' . $numeroPregunta;
+                    }
                 } else {
                     $preguntaLabel = $chart['canvasId'];
                 }
