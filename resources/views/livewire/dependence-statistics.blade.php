@@ -85,7 +85,13 @@
                 // Extraer el número de pregunta del canvasId, por ejemplo: "miChartpregunta1" => "Pregunta 1"
                 $preguntaLabel = '';
                 if (preg_match('/miChartpregunta(\d+)/', $chart['canvasId'], $matches)) {
-                    $preguntaLabel = 'Pregunta ' . $matches[1];
+                    $numeroPregunta = $matches[1];
+                    $preguntaEncontrada = collect($ask_names)->firstWhere('numero_pregunta', $numeroPregunta);
+                    if ($preguntaEncontrada) {
+                        $preguntaLabel = 'Pregunta ' . $numeroPregunta . ': ' . $preguntaEncontrada['pregunta'];
+                    } else {
+                        $preguntaLabel = 'Pregunta ' . $numeroPregunta;
+                    }
                 } else {
                     $preguntaLabel = $chart['canvasId'];
                 }
@@ -103,7 +109,7 @@
         <!-- Questions by Area Tab -->
         <div>
             @foreach ($areas as $area)
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Total de la {{ $area->name }} {{ $areaTotals[$area->id_area] }}</h3>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Total de la {{ $area->name }} - {{ $areaTotals[$area->id_area] }}</h3>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
                     <canvas id="miChart{{ $area->id_area }}" width="400" height="200"></canvas>
